@@ -2,9 +2,11 @@ import express from "express"
 import mongoose from "mongoose"
 import bodyParser from "body-parser"
 import dotenv from "dotenv"
+import cors from "cors";
 import route from "./routes/userRoutes.js"
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 dotenv.config();
 
@@ -14,9 +16,9 @@ const MONGOURL = process.env.MONGO_URL;
 mongoose
         .connect(MONGOURL)
         .then(()=>{
-            console.log("BD connected successfully.");
+            console.log("DB connected successfully.");
             app.listen(PORT,()=>{
-                console.log(`Server is running on port : localhost:${PORT}`)
+                console.log(`Server is running on port : http://localhost:${PORT}`)
             });
         })
         .catch((error)=>{
