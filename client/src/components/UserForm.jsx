@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function UserForm({ onAdd }) {
   const [name, setName] = useState("");
@@ -19,13 +21,17 @@ export default function UserForm({ onAdd }) {
 
     const data = await res.json();
 
-    if (res.ok) {
-      onAdd(data); // Update parent state
+    if (res.status == 200 && data.status == true ) {
+  
+      onAdd(data.data); // Update parent state
       setName("");
       setEmail("");
       setAddress("");
+      console.log(data);
+      toast.success(data.message);
     } else {
-      alert(data.message || "Error creating user");
+      console.log(data);
+      toast.error(data.message);
     }
   };
 
